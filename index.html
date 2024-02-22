@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--=============== FAVICON ===============-->
+        <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+
+        <!--=============== REMIXICONS ===============-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.4.0/remixicon.css" crossorigin="">
+
+        <!--=============== FONT AWESOME ===============-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+        <!--=============== CSS ===============-->
+        <link rel="stylesheet" href="styles.css">
+
+      <title>TECHNICAL DOCUMENTATION ON PIPELINE</title>
+    </head>
+    <body>
+        <nav id="navbar">
+            <header><h1>CPU Pipeline</h1></header>
+            <ul>
+                <li><a class="nav-link" href="#Introduction">Introduction</a></li>
+                <li><a class="nav-link" href="#What_is_a_Pipeline">What is a Pipeline?</a></li>
+                <li><a class="nav-link" href="#Different_Pipelines">RISC & MARIE Pipelines</a></li>
+                <li><a class="nav-link" href="#Conclusion">Conclusion</a></li>
+                <li><a class="nav-link" href="#Sources">Sources</a></li>
+            </ul>
+        </nav>
+         
+         <main class="main" id="main">
+            <section role="region" class="intro-section" id="Introduction" aria-labelledby="Abstract">
+                <header>Introduction</header>
+                <p>The desire to calculate very large numbers and keep track of wealth and properties efficiently and quickly led to the ainvention of several tools, machines, and finally a computer. 
+                    The functionality of a computer has grown since from basic math to more complicated functions and algorithms. 
+                    The more computer functionality increases, the faster we need it to be.</p>
+                <p>
+                    When you hit the record icon on your phone, it takes in the frequency of your voice as input via a microphone. When you go back to hit play, you’d hear your voice coming through the speaker. 
+                    Several different things happen in a split second between the moment you send an input and the moment you receive an output. When you hit the play icon, the instruction to play is sent to Memory. 
+                    Then the control unit fetches your instruction from memory, decodes that instruction, executes it (uses Arithmetic Logic Unit in instructions where arithmetic operations are needed) and communicates the result to your phone speaker (hardware). This illustration explains in simple terms how instructions are processed by the computer.  
+                </p>
+                <p>
+                    The time it takes for you to send or receive data from a computer is determined by how fast the processor fetches, decodes, and executes your instruction. 
+                    This paper discusses how the speed of the fetch-execute cycle can be increased using a mechanism called Pipeline. 
+                </p>
+              </section>
+
+              <section role="region" class="what_section" id="What_is_a_Pipeline">
+                <header>What is a Pipeline?</header>
+                <p>
+                    A pipeline breaks down the instruction execution process into smaller, sequential stages, allowing multiple instructions to be processed simultaneously. 
+                    This technique of breaking down and overlapping instruction execution stages allows the CPU to start executing the next instruction before the previous one is completed, significantly enhancing processor speed. 
+                    Pipeline implementation is similar to the automobile assembly line, where different parts of a vehicle are progressively added or assembled as it moves along a track. 
+                    Each station along the line has specific components to add to the vehicle, and workers or machines sequentially perform these tasks.  
+                </p>
+                <p>
+                    The number of instructions that are completed in an hour is called Throughput and is determined by how often a completed instruction exits the line, and the amount of time required to move the instruction to the next pipe stage is called the Processor Cycle. 
+                    Pipeline stages are hooked together and designed to pass on instructions, which means all stages must be ready to proceed at the same time. The designer’s goal is to balance the length of each pipeline stage as much as possible. 
+                    If the stages are perfectly balanced, then the time it takes for an entire instruction to be executed is equal to: 
+                </p>
+                <p class="center">
+                    (Time per instruction on unpipelined) / (Number of pipe stages)
+                </p>
+                <p>
+                    In most cases, pipelines do not have perfectly balanced stages so the speedup from using a pipeline is generally; 
+                </p>
+                <p class="center">
+                    (n * k)/(n + k - 1)
+                </p>
+                <p>
+                    Where n is the number of instructions in the program and k is the number of stages in the fetch-execute cycle. 
+                    Pipelining usually involves some overhead like stalls and branches that could slow down the execution time for individual instructions and in turn, impact the formula above. 
+                    However, the CPU throughput (number of instructions completed per unit of time) will still increase. 
+                    Stalls occur when a stage takes longer to produce a result that is needed by another stage or when multiple instructions need access to a single resource simultaneously. 
+                    When a conditional branch is encountered, the pipeline doesn't know the outcome until later stages but typically predicts the next instruction to keep the flow going. 
+                    If the prediction is incorrect, the pipeline has to discard the wrongly predicted instructions and start fetching and executing from the correct branch target. 
+                    These processes (branches and stalls) waste clock cycles and resources, slowing down the overall pipeline execution speed. 
+                </p>
+                <p>
+                    Pipelining reduces the average execution time per instruction, which could be considered in two different ways: the number of clock cycles per instruction (CPI) or decreasing clock cycle time. 
+                    If the starting point is a processor that takes multiple clock cycles per instruction, then pipelining will be likely viewed as reducing CPI. 
+                    However, if the starting point is a processor that takes 1 (long) clock cycle per instruction, then pipelining decreases the clock cycle time. 
+                </p>
+                <p>
+                    A 5-stage pipeline will typically have the following stages: fetch, decode, execute, memory access, and write-back cycle. 
+                    The CPU fetches the next instruction from memory, decodes the instruction to determine what operation it requires, performs the operation specified by the instruction, reads or writes from/to memory if required, and then writes back results from the execution to the appropriate registers. 
+                </p>
+                <p>
+                    The following is a visual description of how a pipeline may work. The first instruction loads i, while the rest increments it by 1, each of which takes 5 stages to complete. 
+                    The hardware will initiate a new instruction in every clock cycle while executing some parts of the different instructions.  
+                </p>
+                <img src="https://i.pinimg.com/originals/48/4c/0d/484c0dc3a0a9bc59e8495efd0b445ebf.png" alt="">
+              </section>
+              <section role="region" class="pipeline_section" id="Different_Pipelines">
+                <header>RISC & MARIE Pipelines</header>
+                <p>
+                    The Central Processing Unit is the brain of the computer which contains the control unit, arithmetic logic unit, registers, and cache. 
+                    It works alongside memory to execute instructions. 
+                    Memory stores data, the control unit handles data processing, the arithmetic logic unit performs arithmetic (multiplication, addition, division...) and logic (AND, OR, NOT...) operations, while registers and cache are high-speed storage areas. 
+                    Different computers have different CPU architectures and use pipelines differently to optimize processing speed. 
+                    I will be discussing MARIE and RISC architecture pipelines.  
+                </p>
+                <p>
+                    The MARIE (Machine Architecture that is Really Intuitive and Easy) is a simplified instructional architecture used for educational purposes in CSC 362. 
+                    It's not a real-world processor but a teaching tool for understanding computer architecture and assembly language concepts. 
+                    It consists of memory and CPU, has all the functional components of a working computer, instructions are 16 bits long (4 for the opcode and 12 for the address), 4K words of main memory (word addressable memory, not byte), and stores programs as a fixed word length.  
+                </p>
+                <p>
+                    MARIE’s pipeline is referred to as the fetch-decode-execute cycle. It uses a group of seven registers to move specific data around. 
+                    The Program counter (PC) register holds the address of the next instruction. 
+                    So, the cycle begins by transferring the address from the PC to the memory address register (MAR) so it can be fetched from memory. 
+                    The fetched instruction is then placed into the instruction register (IR). Following this, the control unit decodes the instruction in the IR, determining the specific operation to be executed. 
+                    The decoded instruction initiates an action, which could involve arithmetic, data manipulation, or control flow operations. 
+                    The execution of the instruction utilizes the ALU and involves accessing other necessary registers, such as the accumulator (AC), the memory address register (MAR), the memory buffer register (MBR), the input register (InREG), and the output register (OutREG). 
+                    These seven registers play crucial roles in different stages of instruction execution, facilitating data manipulation, memory access, input/output operations, and addressing within the MARIE architecture.  
+                </p>
+                <p>
+                    RISC-V (Reduced Instruction Set Computer five) architecture is based on a real-world processor called MISC. 
+                    It is designed to optimize performance by simplifying the CPU's instruction set and focusing on high-speed instruction execution through five stages: fetch, decode, execute, memory access, and write-back. 
+                    Three characteristics of RISC include:  
+                </p>
+                <ul>
+                    <li>All operations on data apply to all data in registers. </li>
+                    <li>The only operations that affect memory are load and store operations.  </li>
+                    <li>It has only a few instruction formats with all instructions typically being one size.</li>
+                </ul>
+                <h4>
+                    How do these properties simplify the implementation of pipelining?  
+                </h4>
+                <p>
+                    Having uniform operations on registers means that data processing stages can be consistently handled without the need for complex memory access or addressing calculations. 
+                    This uniformity streamlines the pipeline stages, allowing for smooth data flow and reducing the need for extensive data forwarding or hazard handling. 
+                    RISC's load/store architecture means that the majority of instructions only interact with CPU registers. 
+                    Since memory-related operations are constrained to specific load and store stages, the pipeline design can focus on optimizing these stages for memory access, reducing potential memory-related hazards in other stages. 
+                    The uniform instruction format helps in maintaining pipeline synchronization and reducing complexity in instruction decoding.  
+                </p>
+                <p>
+                    I discussed above that branches and stalls can impact pipeline speedup. 
+                    These can also be referred to as pipeline hazards and categorized into three classes: structural hazards, data hazards, and control hazards. 
+                    Structural hazards refer to stalls caused by resource conflict, data hazards refer to stalls caused by resource dependencies, and control hazards refer to hazards caused by branches. 
+                    In MARIE architecture, each instruction that encounters a stall or branch penalty experiences a 2-cycle delay for stalls and a 4-cycle delay for branch penalties while RISC-V processors typically have 1-cycle stalls and branch penalties when encountered. 
+                    However, various compiler optimizations in RISC-V can mitigate these penalties by restructuring code or using predictive techniques. 
+                </p>
+              </section>
+              <section role="region" class="conclusion_section" id="Conclusion">
+                <header>Conclusion</header>
+                <p>
+                    This documentation explores the principles of pipelining, its impact on processor speed, and how different computer architectures utilize pipelines. 
+                    RISC architectures leverage uniform data operations in registers and limited memory interactions to streamline pipelining, while the MARIE architecture serves as an educational tool with a simplified pipeline structure. 
+                </p>
+                <p>Pipeline isn’t as simple as it is explained in this webpage, but understanding these concepts contributes to a broader comprehension of computer architecture and the mechanisms employed to achieve efficient and high-speed data processing. </p>
+              </section>
+              <section role="region" class="source_section" id="Sources">
+                <header>Sources</header>
+                <p class="sourcep">
+                   <i>Hennessy, John L, et al. Computer Architecture : A Quantitative Approach. Cambridge, Ma, Morgan Kaufmann, 2019. </i>
+                </p>
+                <p class="sourcep">
+                    <i>Null, Linda, and Julia Lobur. The Essentials of Computer Organization and Architecture, Fourth Edition. Burlington, MA, Jones & Bartlett Learning,. </i>
+                </p>
+              </section>
+         </main>
+    </body>
+</html>
