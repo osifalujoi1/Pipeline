@@ -3,19 +3,28 @@
         scroll-behavior: smooth;
     }
 }
+html:focus-visible {
+    outline: none;
+}
 
 #navbar{
     position: fixed;
     min-width: 290px;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     width: 300px;
     height: 100vh;
     border-right: solid;
     border-color: black;
+    z-index: 1;
     background-color: rgba(183, 89, 89, 0.4);
 }
- 
+
+.nav-link:hover{
+    background-color: rgba(0, 0, 0, 0.4);
+    color: rgb(240,240,240);
+}
+
 @media only screen and (max-width: 815px){
     #navbar {
         position: absolute;
@@ -40,10 +49,6 @@
     }
 }
 
-
-html:focus-visible {
-    outline: none;
-}
 
 html, body{
     display: flex;
@@ -141,11 +146,6 @@ li{
     text-decoration: underline;
     cursor: pointer;
     color: black;
-  }
-
-  .nav-link:hover{
-    background-color: rgba(0, 0, 0, 0.4);
-    color: rgb(240,240,240);
   }
   
   #main header{
